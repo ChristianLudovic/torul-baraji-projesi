@@ -49,7 +49,7 @@ class FishSample {
     }
 
     public String classifySpecies() {
-        return String.format("Classification pour %s basée sur L:%.2fcm, P:%.2fg", species, length, weight);
+        return String.format("Classification for %s based on L:%.2fcm, W:%.2fg", species, length, weight);
     }
 
     public String getSpecies() {
@@ -79,7 +79,7 @@ class SoundRecording {
     }
 
     public String exportData() {
-        return String.format("Enregistrement du %s - Durée: %ds", timestamp, duration);
+        return String.format("Recording from %s - Duration: %ds", timestamp, duration);
     }
 }
 
@@ -132,7 +132,7 @@ class Observation {
     }
 
     public void attachPhotos(List<String> photoPaths) {
-        System.out.println("Photos attachées: " + String.join(", ", photoPaths));
+        System.out.println("Photos attached: " + String.join(", ", photoPaths));
     }
 
     public void addSoundRecording(SoundRecording recording) {
@@ -174,11 +174,11 @@ class FishStudy {
             .sum();
 
         return String.format("""
-            Rapport d'étude: %s
-            Période: %s - %s
-            Nombre total d'observations: %d
-            Nombre total d'échantillons: %d
-            Nombre total d'enregistrements: %d
+            Study Report: %s
+            Period: %s - %s
+            Total observations: %d
+            Total samples: %d
+            Total recordings: %d
             """,
             projectName,
             startDate.toLocalDate(),
@@ -205,39 +205,33 @@ class FishStudy {
     }
 }
 
-public class Main {
+class Main {
     public static void main(String[] args) {
-        // Création d'une nouvelle étude
         FishStudy study = new FishStudy(
-            "Étude Barrage Torul",
+            "Torul Dam Study",
             LocalDateTime.of(2024, 1, 1, 0, 0),
             LocalDateTime.of(2024, 12, 31, 23, 59)
         );
 
-        // Création d'une location
         Location location = new Location("Point A", 40.5678, 39.8765, 15.5);
 
-        // Création d'une observation
         Observation observation = new Observation(
             LocalDateTime.now(),
-            "Ensoleillé",
+            "Sunny",
             18.5,
             "Dr. Smith",
             location
         );
 
-        // Ajout d'un échantillon de poisson
-        FishSample fish = new FishSample("Truite", 25.5, 500, "Nage active");
+        FishSample fish = new FishSample("Trout", 25.5, 500, "Active swimming");
         observation.recordData(fish);
 
-        // Ajout d'un enregistrement sonore
         SoundRecording sound = new SoundRecording(LocalDateTime.now(), "WAV", 120);
         observation.addSoundRecording(sound);
 
-        // Ajout de l'observation à l'étude
         study.addObservation(observation);
 
-        // Génération d'un rapport
         System.out.println(study.generateReport());
+        System.out.println(study.analyzeTrends());
     }
 }
